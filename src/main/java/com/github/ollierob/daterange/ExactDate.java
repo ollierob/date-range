@@ -1,0 +1,70 @@
+package com.github.ollierob.daterange;
+
+import javax.annotation.Nonnull;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Objects;
+import java.util.Optional;
+
+/**
+ * A range containing a single date.
+ */
+public class ExactDate implements DateRange, Serializable {
+
+    private static final long serialVersionUID = -7822691754379610144L;
+
+    private final LocalDate date;
+
+    public ExactDate(@Nonnull final LocalDate date) {
+        Objects.requireNonNull(date);
+        this.date = date;
+    }
+
+    @Nonnull
+    @Override
+    public Optional<LocalDate> earliest() {
+        return Optional.of(date);
+    }
+
+    @Nonnull
+    @Override
+    public LocalDate earliestOrMin() {
+        return date;
+    }
+
+    @Nonnull
+    @Override
+    public Optional<LocalDate> latest() {
+        return Optional.of(date);
+    }
+
+    @Nonnull
+    @Override
+    public LocalDate latestOrMax() {
+        return date;
+    }
+
+    @Nonnull
+    @Override
+    public Optional<LocalDate> exact() {
+        return Optional.of(date);
+    }
+
+    @Override
+    public boolean contains(@Nonnull final LocalDate date) {
+        return this.date.isEqual(date);
+    }
+
+    @Nonnull
+    @Override
+    public DateRange shift(final Period period) {
+        return period.isZero() ? this : new ExactDate(date.plus(period));
+    }
+
+    @Override
+    public String toString() {
+        return "[" + date + "]";
+    }
+
+}
