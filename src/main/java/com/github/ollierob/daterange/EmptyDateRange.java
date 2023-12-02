@@ -12,6 +12,9 @@ public class EmptyDateRange implements DateRange, Serializable {
 
     static final EmptyDateRange INSTANCE = new EmptyDateRange();
 
+    protected EmptyDateRange() {
+    }
+
     @Nonnull
     @Override
     public Optional<LocalDate> earliest() {
