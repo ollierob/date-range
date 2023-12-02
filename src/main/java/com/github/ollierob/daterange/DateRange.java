@@ -164,6 +164,7 @@ public interface DateRange {
 
     @Nonnull
     static DateRange strictlyAfter(final LocalDate date) {
+        if (!date.isBefore(LocalDate.MAX)) return none();
         return new AfterDateRange(date.plusDays(1));
     }
 
