@@ -114,4 +114,9 @@ public interface DateRange {
         else return closed(end, start);
     }
 
+    @Nonnull
+    static DateRange closedOpen(final LocalDate start, final LocalDate end) {
+        return closed(start, end.minusDays(1));
+    }
+
 }
