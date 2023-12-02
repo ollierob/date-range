@@ -32,10 +32,20 @@ public class ClosedDateRange implements DateRange, Serializable {
         return start;
     }
 
+    @Override
+    public boolean hasEarliest() {
+        return true;
+    }
+
     @Nonnull
     @Override
     public Optional<LocalDate> latest() {
         return Optional.of(end);
+    }
+
+    @Override
+    public boolean hasLatest() {
+        return true;
     }
 
     @Nonnull
@@ -48,6 +58,11 @@ public class ClosedDateRange implements DateRange, Serializable {
     @Override
     public DateRange shift(@Nonnull final Period shift) {
         return shift.isZero() ? this : new ClosedDateRange(start.plus(shift), end.plus(shift));
+    }
+
+    @Override
+    public Optional<ClosedDateRange> closed() {
+        return Optional.of(this);
     }
 
     @Override

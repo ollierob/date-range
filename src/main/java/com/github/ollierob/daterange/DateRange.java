@@ -121,6 +121,17 @@ public interface DateRange {
         return earliest.get().isEqual(latest.get()) ? earliest : Optional.empty();
     }
 
+    /**
+     * @return a closed range if this range is closed.
+     */
+    default Optional<ClosedDateRange> closed() {
+        final Optional<LocalDate> earliest = this.earliest();
+        if (!earliest.isPresent()) return Optional.empty();
+        final Optional<LocalDate> latest = this.latest();
+        if (!latest.isPresent()) return Optional.empty();
+        return Optional.of(new ClosedDateRange(earliest.get(), latest.get()));
+    }
+
     @Nonnull
     @CheckReturnValue
     default DateRange shift(@Nonnull final Period shift) {
