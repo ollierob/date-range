@@ -50,8 +50,8 @@ public interface DateRange {
 
     @Nonnull
     @CheckReturnValue
-    default DateRange shift(@Nonnull final Period period) {
-        return period.isZero() ? this : new ShiftedDateRange(this, period, period);
+    default DateRange shift(@Nonnull final Period shift) {
+        return shift.isZero() ? this : new ShiftedDateRange(this, shift, shift);
     }
 
     static DateRange any() {

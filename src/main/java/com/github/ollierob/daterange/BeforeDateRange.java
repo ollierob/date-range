@@ -3,6 +3,7 @@ package com.github.ollierob.daterange;
 import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Optional;
 
 public class BeforeDateRange implements DateRange, Serializable {
@@ -25,6 +26,12 @@ public class BeforeDateRange implements DateRange, Serializable {
     @Override
     public Optional<LocalDate> latest() {
         return Optional.of(latest);
+    }
+
+    @Nonnull
+    @Override
+    public DateRange shift(@Nonnull final Period shift) {
+        return shift.isZero() ? this : new BeforeDateRange(latest.plus(shift));
     }
 
     @Override

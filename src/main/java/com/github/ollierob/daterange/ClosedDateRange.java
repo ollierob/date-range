@@ -3,6 +3,7 @@ package com.github.ollierob.daterange;
 import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -41,6 +42,12 @@ public class ClosedDateRange implements DateRange, Serializable {
     @Override
     public LocalDate latestOrMax() {
         return end;
+    }
+
+    @Nonnull
+    @Override
+    public DateRange shift(@Nonnull final Period shift) {
+        return shift.isZero() ? this : new ClosedDateRange(start.plus(shift), end.plus(shift));
     }
 
     @Override

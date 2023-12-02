@@ -39,7 +39,7 @@ public class AnyDateRange implements DateRange, Serializable {
 
     @Nonnull
     @Override
-    public DateRange shift(@Nonnull final Period period) {
+    public DateRange shift(@Nonnull final Period shift) {
         return this;
     }
 

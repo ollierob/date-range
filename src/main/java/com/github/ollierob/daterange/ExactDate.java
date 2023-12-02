@@ -58,8 +58,8 @@ public class ExactDate implements DateRange, Serializable {
 
     @Nonnull
     @Override
-    public DateRange shift(final Period period) {
-        return period.isZero() ? this : new ExactDate(date.plus(period));
+    public DateRange shift(final Period shift) {
+        return shift.isZero() ? this : new ExactDate(date.plus(shift));
     }
 
     @Override
