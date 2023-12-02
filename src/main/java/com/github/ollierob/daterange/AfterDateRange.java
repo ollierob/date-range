@@ -24,6 +24,12 @@ public class AfterDateRange implements DateRange, Serializable {
 
     @Nonnull
     @Override
+    public LocalDate earliestOrMin() {
+        return start;
+    }
+
+    @Nonnull
+    @Override
     public Optional<LocalDate> latest() {
         return Optional.empty();
     }

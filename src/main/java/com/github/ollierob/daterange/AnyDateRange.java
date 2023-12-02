@@ -44,6 +44,11 @@ public class AnyDateRange implements DateRange, Serializable {
     }
 
     @Override
+    public boolean equals(final DateRange that) {
+        return super.equals(that) && !that.isEmpty();
+    }
+
+    @Override
     public String toString() {
         return "(any)";
     }

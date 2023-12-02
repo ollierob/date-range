@@ -34,6 +34,9 @@ public class EmptyDateRange implements DateRange, Serializable {
         return false;
     }
 
+    /**
+     * @return true only if given another empty range.
+     */
     @Override
     public boolean intersects(@Nonnull final DateRange that) {
         return that.isEmpty();
@@ -43,6 +46,11 @@ public class EmptyDateRange implements DateRange, Serializable {
     @Override
     public DateRange shift(@Nonnull final Period shift) {
         return this;
+    }
+
+    @Override
+    public boolean equals(final DateRange that) {
+        return that.isEmpty();
     }
 
     @Override

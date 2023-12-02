@@ -30,6 +30,12 @@ public class BeforeDateRange implements DateRange, Serializable {
 
     @Nonnull
     @Override
+    public LocalDate latestOrMax() {
+        return latest;
+    }
+
+    @Nonnull
+    @Override
     public DateRange shift(@Nonnull final Period shift) {
         return shift.isZero() ? this : new BeforeDateRange(latest.plus(shift));
     }

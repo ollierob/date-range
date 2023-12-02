@@ -35,6 +35,9 @@ public interface DateRange {
         return this.earliestOrMin().compareTo(date) <= 0 && date.compareTo(this.latestOrMax()) <= 0;
     }
 
+    /**
+     * @return true if this range intersects with the given range.
+     */
     default boolean intersects(@Nonnull final DateRange that) {
         return this.earliestOrMin().compareTo(that.latestOrMax()) <= 0 && this.latestOrMax().compareTo(that.earliestOrMin()) >= 0;
     }
@@ -54,38 +57,52 @@ public interface DateRange {
         return shift.isZero() ? this : new ShiftedDateRange(this, shift, shift);
     }
 
+    default boolean equals(final DateRange that) {
+        return this.earliest().equals(that.earliest())
+                && this.latest().equals(that.latest());
+    }
+
+    @Nonnull
     static DateRange any() {
         return AnyDateRange.INSTANCE;
     }
 
+    @Nonnull
     static DateRange none() {
         return EmptyDateRange.INSTANCE;
     }
 
+    @Nonnull
     static DateRange of(final LocalDate date) {
         return new ExactDate(date);
     }
 
+    @Nonnull
     static DateRange onOrBefore(final LocalDate date) {
         return new BeforeDateRange(date);
     }
 
+    @Nonnull
     static DateRange strictlyBefore(final LocalDate date) {
         return new BeforeDateRange(date.minusDays(1));
     }
 
+    @Nonnull
     static DateRange onOrAfter(final LocalDate date) {
         return new AfterDateRange(date);
     }
 
+    @Nonnull
     static DateRange strictlyAfter(final LocalDate date) {
         return new AfterDateRange(date.plusDays(1));
     }
 
+    @Nonnull
     static DateRange closed(final LocalDate start, final LocalDate end) {
-        if (start.isEqual(end)) return of(start);
-        if (start.isAfter(end)) return closed(end, start);
-        return new ClosedDateRange(start, end);
+        final int c = start.compareTo(end);
+        if (c == 0) return of(start);
+        else if (c < 0) return of(start);
+        else return closed(end, start);
     }
 
 }

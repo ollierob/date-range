@@ -16,7 +16,7 @@ public class ExactDate implements DateRange, Serializable {
 
     private final LocalDate date;
 
-    public ExactDate(@Nonnull final LocalDate date) {
+    protected ExactDate(@Nonnull final LocalDate date) {
         Objects.requireNonNull(date);
         this.date = date;
     }
