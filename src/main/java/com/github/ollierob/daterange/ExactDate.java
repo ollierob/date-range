@@ -27,6 +27,11 @@ public class ExactDate implements DateRange, Serializable {
         return Optional.of(date);
     }
 
+    @Override
+    public boolean hasEarliest() {
+        return true;
+    }
+
     @Nonnull
     @Override
     public LocalDate earliestOrMin() {
@@ -37,6 +42,11 @@ public class ExactDate implements DateRange, Serializable {
     @Override
     public Optional<LocalDate> latest() {
         return Optional.of(date);
+    }
+
+    @Override
+    public boolean hasLatest() {
+        return true;
     }
 
     @Nonnull

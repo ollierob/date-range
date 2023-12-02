@@ -28,6 +28,11 @@ public class BeforeDateRange implements DateRange, Serializable {
         return Optional.of(latest);
     }
 
+    @Override
+    public boolean hasLatest() {
+        return true;
+    }
+
     @Nonnull
     @Override
     public LocalDate latestOrMax() {
@@ -38,6 +43,14 @@ public class BeforeDateRange implements DateRange, Serializable {
     @Override
     public DateRange shift(@Nonnull final Period shift) {
         return shift.isZero() ? this : new BeforeDateRange(latest.plus(shift));
+    }
+
+    @Nonnull
+    @Override
+    public DateRange intersection(final DateRange that) {
+        return that instanceof BeforeDateRange
+                ? new BeforeDateRange(LocalDateUtils.min(latest, ((BeforeDateRange) that).latest))
+                : DateRange.super.intersection(that);
     }
 
     @Override

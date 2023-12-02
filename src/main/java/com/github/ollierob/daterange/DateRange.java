@@ -15,6 +15,10 @@ public interface DateRange {
     @Nonnull
     Optional<LocalDate> earliest();
 
+    default boolean hasEarliest() {
+        return this.earliest().isPresent();
+    }
+
     /**
      * @return the earliest date in this range, if specified, else {@link LocalDate#MIN}.
      */
@@ -28,6 +32,10 @@ public interface DateRange {
      */
     @Nonnull
     Optional<LocalDate> latest();
+
+    default boolean hasLatest() {
+        return this.latest().isPresent();
+    }
 
     /**
      * @return the latest date in this range, if specified, else {@link LocalDate#MAX}.
@@ -71,6 +79,7 @@ public interface DateRange {
     /**
      * @return true if this range contains the given date.
      */
+    @SuppressWarnings("RedundantCompareToJavaTime")
     default boolean contains(@Nonnull final LocalDate date) {
         return this.earliestOrMin().compareTo(date) <= 0 && date.compareTo(this.latestOrMax()) <= 0;
     }
@@ -78,8 +87,26 @@ public interface DateRange {
     /**
      * @return true if this range intersects with the given range.
      */
+    @SuppressWarnings("RedundantCompareToJavaTime")
     default boolean intersects(@Nonnull final DateRange that) {
         return this.earliestOrMin().compareTo(that.latestOrMax()) <= 0 && this.latestOrMax().compareTo(that.earliestOrMin()) >= 0;
+    }
+
+    @Nonnull
+    default DateRange intersection(final DateRange that) {
+        if (that.isEmpty()) return none();
+        final LocalDate start = LocalDateUtils.max(this.earliestOrMin(), that.earliestOrMin());
+        final LocalDate end = LocalDateUtils.min(this.latestOrMax(), that.latestOrMax());
+        final int c = start.compareTo(end);
+        if (c == 0) return of(start);
+        else if (c > 0) return none();
+        //Check for open intervals
+        final boolean startOpen = !this.hasEarliest() || !that.hasEarliest();
+        final boolean endOpen = !this.hasLatest() || !that.hasLatest();
+        if (startOpen && endOpen) return any();
+        else if (startOpen) return onOrBefore(end);
+        else if (endOpen) return onOrAfter(start);
+        else return closed(start, end);
     }
 
     /**
@@ -126,6 +153,7 @@ public interface DateRange {
 
     @Nonnull
     static DateRange strictlyBefore(final LocalDate date) {
+        if (!date.isAfter(LocalDate.MIN)) return none();
         return new BeforeDateRange(date.minusDays(1));
     }
 

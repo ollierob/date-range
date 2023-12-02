@@ -37,6 +37,11 @@ public class AnyDateRange implements DateRange, Serializable {
         return true;
     }
 
+    @Override
+    public DateRange intersection(final DateRange that) {
+        return that;
+    }
+
     @Nonnull
     @Override
     public DateRange shift(@Nonnull final Period shift) {

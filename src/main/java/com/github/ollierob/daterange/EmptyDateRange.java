@@ -42,6 +42,11 @@ public class EmptyDateRange implements DateRange, Serializable {
         return that.isEmpty();
     }
 
+    @Override
+    public DateRange intersection(final DateRange that) {
+        return this;
+    }
+
     @Nonnull
     @Override
     public DateRange shift(@Nonnull final Period shift) {
