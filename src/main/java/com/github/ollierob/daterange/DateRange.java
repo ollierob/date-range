@@ -66,12 +66,20 @@ public interface DateRange {
         return new ExactDate(date);
     }
 
+    static DateRange onOrBefore(final LocalDate date) {
+        return new BeforeDateRange(date);
+    }
+
+    static DateRange strictlyBefore(final LocalDate date) {
+        return new BeforeDateRange(date.minusDays(1));
+    }
+
     static DateRange onOrAfter(final LocalDate date) {
-        return new OnOrAfterDate(date);
+        return new AfterDateRange(date);
     }
 
     static DateRange strictlyAfter(final LocalDate date) {
-        return new OnOrAfterDate(date.plusDays(1));
+        return new AfterDateRange(date.plusDays(1));
     }
 
     static DateRange closed(final LocalDate start, final LocalDate end) {

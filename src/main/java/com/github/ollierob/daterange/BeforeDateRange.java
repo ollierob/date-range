@@ -5,31 +5,31 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Optional;
 
-public class OnOrAfterDate implements DateRange, Serializable {
+public class BeforeDateRange implements DateRange, Serializable {
 
-    private static final long serialVersionUID = -6455215487148810950L;
+    private static final long serialVersionUID = 4017731784129941769L;
 
-    private final LocalDate start;
+    private final LocalDate latest;
 
-    protected OnOrAfterDate(final LocalDate start) {
-        this.start = start;
+    protected BeforeDateRange(final LocalDate latest) {
+        this.latest = latest;
     }
 
     @Nonnull
     @Override
     public Optional<LocalDate> earliest() {
-        return Optional.of(start);
+        return Optional.empty();
     }
 
     @Nonnull
     @Override
     public Optional<LocalDate> latest() {
-        return Optional.empty();
+        return Optional.of(latest);
     }
 
     @Override
     public String toString() {
-        return "[" + start + ")";
+        return "(..," + latest + "]";
     }
 
 }

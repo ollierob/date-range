@@ -45,4 +45,9 @@ public class EmptyDateRange implements DateRange, Serializable {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "(empty)";
+    }
+
 }

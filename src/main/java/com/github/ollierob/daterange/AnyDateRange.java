@@ -43,4 +43,9 @@ public class AnyDateRange implements DateRange, Serializable {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "(any)";
+    }
+
 }
