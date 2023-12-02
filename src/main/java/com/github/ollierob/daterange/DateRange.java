@@ -168,12 +168,16 @@ public interface DateRange {
         return new AfterDateRange(date.plusDays(1));
     }
 
+    /**
+     * @return a range of dates between the given start and end dates, inclusive.
+     * If the given start date is after the given end date then return an empty date range.
+     */
     @Nonnull
     static DateRange closed(final LocalDate start, final LocalDate end) {
         final int c = start.compareTo(end);
         if (c == 0) return of(start);
-        else if (c < 0) return of(start);
-        else return closed(end, start);
+        else if (c < 0) return new ClosedDateRange(start, end);
+        else return none();
     }
 
     @Nonnull
