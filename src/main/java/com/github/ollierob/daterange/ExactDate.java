@@ -63,6 +63,11 @@ public class ExactDate implements DateRange, Serializable {
     }
 
     @Override
+    public boolean equals(final Object obj) {
+        return obj instanceof DateRange && this.equals((DateRange) obj);
+    }
+
+    @Override
     public String toString() {
         return "[" + date + "]";
     }
