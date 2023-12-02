@@ -2,7 +2,6 @@ package com.github.ollierob.daterange;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Optional;
@@ -26,12 +25,12 @@ public interface DateRange {
     }
 
     @Nonnull
-    default Optional<Duration> duration() {
+    default Optional<Period> period() {
         final LocalDate earliest = this.earliest().orElse(null);
         if (earliest == null) return Optional.empty();
         final LocalDate latest = this.latest().orElse(null);
         if (latest == null) return Optional.empty();
-        return Optional.of(Duration.between(earliest, latest));
+        return Optional.of(Period.between(earliest, latest));
     }
 
     default boolean isEmpty() {

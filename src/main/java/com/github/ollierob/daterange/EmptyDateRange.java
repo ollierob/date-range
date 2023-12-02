@@ -2,7 +2,6 @@ package com.github.ollierob.daterange;
 
 import javax.annotation.Nonnull;
 import java.io.Serializable;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Optional;
@@ -51,8 +50,8 @@ public class EmptyDateRange implements DateRange, Serializable {
 
     @Nonnull
     @Override
-    public Optional<Duration> duration() {
-        return Optional.of(Duration.ZERO);
+    public Optional<Period> period() {
+        return Optional.of(Period.ZERO);
     }
 
     @Override
