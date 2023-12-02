@@ -4,26 +4,42 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.Year;
 import java.util.Optional;
 
 public interface DateRange {
 
+    /**
+     * @return the earliest date in this range, if specified. Empty means no earliest date.
+     */
     @Nonnull
     Optional<LocalDate> earliest();
 
+    /**
+     * @return the earliest date in this range, if specified, else {@link LocalDate#MIN}.
+     */
     @Nonnull
     default LocalDate earliestOrMin() {
         return this.earliest().orElse(LocalDate.MIN);
     }
 
+    /**
+     * @return the latest date in this range, if specified. Empty means no latest date.
+     */
     @Nonnull
     Optional<LocalDate> latest();
 
+    /**
+     * @return the latest date in this range, if specified, else {@link LocalDate#MAX}.
+     */
     @Nonnull
     default LocalDate latestOrMax() {
         return this.latest().orElse(LocalDate.MAX);
     }
 
+    /**
+     * @return the period of this date range, if non-infinite.
+     */
     @Nonnull
     default Optional<Period> period() {
         final LocalDate earliest = this.earliest().orElse(null);
@@ -33,6 +49,21 @@ public interface DateRange {
         return Optional.of(Period.between(earliest, latest));
     }
 
+    /**
+     * @return the single year represented by this range, if any,
+     */
+    @Nonnull
+    default Optional<Year> year() {
+        final LocalDate earliest = this.earliest().orElse(null);
+        if (earliest == null) return Optional.empty();
+        final LocalDate latest = this.latest().orElse(null);
+        if (latest == null) return Optional.empty();
+        return earliest.getYear() == latest.getYear() ? Optional.of(Year.of(earliest.getYear())) : Optional.empty();
+    }
+
+    /**
+     * @return true if this range is the empty set.
+     */
     default boolean isEmpty() {
         return false;
     }
@@ -51,6 +82,9 @@ public interface DateRange {
         return this.earliestOrMin().compareTo(that.latestOrMax()) <= 0 && this.latestOrMax().compareTo(that.earliestOrMin()) >= 0;
     }
 
+    /**
+     * @return a date if this range represents a single date.
+     */
     @Nonnull
     default Optional<LocalDate> exact() {
         final Optional<LocalDate> earliest = this.earliest();
@@ -66,9 +100,8 @@ public interface DateRange {
         return shift.isZero() ? this : new ShiftedDateRange(this, shift, shift);
     }
 
-    default boolean equals(final DateRange that) {
-        return this.earliest().equals(that.earliest())
-                && this.latest().equals(that.latest());
+    default boolean equals(@Nonnull final DateRange that) {
+        return this == that || this.earliest().equals(that.earliest()) && this.latest().equals(that.latest());
     }
 
     @Nonnull
