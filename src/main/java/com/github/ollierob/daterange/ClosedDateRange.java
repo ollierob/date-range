@@ -62,6 +62,12 @@ public class ClosedDateRange implements DateRange, Serializable, Iterable<LocalD
         return shift.isZero() ? this : new ClosedDateRange(start.plus(shift), end.plus(shift));
     }
 
+    @Nonnull
+    @Override
+    public Optional<LocalDate> exact() {
+        return start.equals(end) ? Optional.of(start) : Optional.empty();
+    }
+
     @Override
     public Optional<ClosedDateRange> closed() {
         return Optional.of(this);
