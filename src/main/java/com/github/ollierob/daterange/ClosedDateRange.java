@@ -4,10 +4,12 @@ import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ClosedDateRange implements DateRange, Serializable {
+public class ClosedDateRange implements DateRange, Serializable, Iterable<LocalDate> {
 
     private static final long serialVersionUID = 8540911115103058696L;
 
@@ -63,6 +65,28 @@ public class ClosedDateRange implements DateRange, Serializable {
     @Override
     public Optional<ClosedDateRange> closed() {
         return Optional.of(this);
+    }
+
+    @Override
+    public Iterator<LocalDate> iterator() {
+        return new Iterator<LocalDate>() {
+
+            LocalDate date = start;
+
+            @Override
+            public boolean hasNext() {
+                return !date.isAfter(end);
+            }
+
+            @Override
+            public LocalDate next() {
+                if (!this.hasNext()) throw new NoSuchElementException();
+                final LocalDate date = this.date;
+                this.date = date.plusDays(1);
+                return date;
+            }
+
+        };
     }
 
     @Override
