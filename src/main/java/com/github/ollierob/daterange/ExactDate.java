@@ -66,6 +66,17 @@ public class ExactDate implements DateRange, Serializable {
         return this.date.isEqual(date);
     }
 
+    @Override
+    public boolean intersects(@Nonnull final DateRange that) {
+        return that.contains(date);
+    }
+
+    @Nonnull
+    @Override
+    public DateRange intersection(final DateRange that) {
+        return this.intersects(that) ? this : DateRange.none();
+    }
+
     @Nonnull
     @Override
     public DateRange shift(final Period shift) {

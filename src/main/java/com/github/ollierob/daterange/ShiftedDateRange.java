@@ -28,16 +28,31 @@ public class ShiftedDateRange implements DateRange, Serializable {
         return delegate.earliest().map(d -> d.plus(shiftStart));
     }
 
+    @Override
+    public boolean hasEarliest() {
+        return delegate.hasEarliest();
+    }
+
     @Nonnull
     @Override
     public Optional<LocalDate> latest() {
         return delegate.latest().map(d -> d.plus(shiftEnd));
     }
 
+    @Override
+    public boolean hasLatest() {
+        return delegate.hasLatest();
+    }
+
     @Nonnull
     @Override
     public DateRange shift(final Period shift) {
         return shift.isZero() ? this : new ShiftedDateRange(delegate, this.shiftStart.plus(shift), this.shiftEnd.plus(shift));
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return delegate.isEmpty();
     }
 
     @Override

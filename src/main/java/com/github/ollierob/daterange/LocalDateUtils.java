@@ -5,7 +5,6 @@ import java.time.LocalDate;
 public class LocalDateUtils {
 
     private LocalDateUtils() {
-
     }
 
     public static LocalDate min(final LocalDate d1, final LocalDate d2) {
