@@ -101,8 +101,8 @@ public interface DateRange {
         if (c == 0) return of(start);
         else if (c > 0) return none();
         //Check for open intervals
-        final boolean startOpen = !this.hasEarliest() || !that.hasEarliest();
-        final boolean endOpen = !this.hasLatest() || !that.hasLatest();
+        final boolean startOpen = !this.hasEarliest() && !that.hasEarliest();
+        final boolean endOpen = !this.hasLatest() && !that.hasLatest();
         if (startOpen && endOpen) return all();
         else if (startOpen) return onOrBefore(end);
         else if (endOpen) return onOrAfter(start);

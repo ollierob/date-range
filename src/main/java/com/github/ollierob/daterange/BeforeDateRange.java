@@ -49,8 +49,14 @@ public class BeforeDateRange extends AbstractDateRange implements Serializable {
     @Override
     public DateRange intersection(final DateRange that) {
         return that instanceof BeforeDateRange
-                ? new BeforeDateRange(LocalDateUtils.min(latest, ((BeforeDateRange) that).latest))
+                ? this.intersection((BeforeDateRange) that)
                 : super.intersection(that);
+    }
+
+    @Nonnull
+    public BeforeDateRange intersection(final BeforeDateRange that) {
+        final LocalDate min = LocalDateUtils.min(latest, that.latest);
+        return this.latest == min ? this : new BeforeDateRange(min);
     }
 
 }
