@@ -1,10 +1,13 @@
 package com.github.ollierob.daterange;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
-public abstract class AbstractDateRange implements DateRange {
+public abstract class AbstractDateRange implements DateRange, Serializable {
+
+    private static final long serialVersionUID = 7087752370390444943L;
 
     @Override
     public boolean equals(final Object obj) {
