@@ -6,12 +6,12 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class AnyDateRangeTest {
+class AllDateRangeTest {
 
     @Test
     void shouldContainAnyDate() {
 
-        final AnyDateRange instance = new AnyDateRange();
+        final AllDateRange instance = new AllDateRange();
 
         assertTrue(instance.contains(LocalDate.MIN));
         assertTrue(instance.contains(LocalDate.now()));

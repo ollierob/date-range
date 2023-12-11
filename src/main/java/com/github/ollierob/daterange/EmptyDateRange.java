@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Optional;
 
-public class EmptyDateRange implements DateRange, Serializable {
+public class EmptyDateRange extends AbstractDateRange implements Serializable {
 
     private static final long serialVersionUID = 154001019754347063L;
 
@@ -63,18 +63,13 @@ public class EmptyDateRange implements DateRange, Serializable {
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        return obj instanceof DateRange && this.equals((DateRange) obj);
-    }
-
-    @Override
     public boolean equals(final DateRange that) {
         return that.isEmpty();
     }
 
     @Override
     public String toString() {
-        return "(empty)";
+        return "(none)";
     }
 
 }

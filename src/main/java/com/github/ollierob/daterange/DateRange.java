@@ -103,7 +103,7 @@ public interface DateRange {
         //Check for open intervals
         final boolean startOpen = !this.hasEarliest() || !that.hasEarliest();
         final boolean endOpen = !this.hasLatest() || !that.hasLatest();
-        if (startOpen && endOpen) return any();
+        if (startOpen && endOpen) return all();
         else if (startOpen) return onOrBefore(end);
         else if (endOpen) return onOrAfter(start);
         else return closed(start, end);
@@ -143,8 +143,8 @@ public interface DateRange {
     }
 
     @Nonnull
-    static DateRange any() {
-        return AnyDateRange.INSTANCE;
+    static DateRange all() {
+        return AllDateRange.INSTANCE;
     }
 
     @Nonnull

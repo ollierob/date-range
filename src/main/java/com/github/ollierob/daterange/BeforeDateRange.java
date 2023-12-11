@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Optional;
 
-public class BeforeDateRange implements DateRange, Serializable {
+public class BeforeDateRange extends AbstractDateRange implements Serializable {
 
     private static final long serialVersionUID = 4017731784129941769L;
 
@@ -50,17 +50,7 @@ public class BeforeDateRange implements DateRange, Serializable {
     public DateRange intersection(final DateRange that) {
         return that instanceof BeforeDateRange
                 ? new BeforeDateRange(LocalDateUtils.min(latest, ((BeforeDateRange) that).latest))
-                : DateRange.super.intersection(that);
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        return obj instanceof DateRange && this.equals((DateRange) obj);
-    }
-
-    @Override
-    public String toString() {
-        return "(..," + latest + "]";
+                : super.intersection(that);
     }
 
 }

@@ -6,13 +6,13 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Optional;
 
-public class AnyDateRange implements DateRange, Serializable {
+public class AllDateRange extends AbstractDateRange implements Serializable {
 
     private static final long serialVersionUID = 7178272465031806916L;
 
-    static final AnyDateRange INSTANCE = new AnyDateRange();
+    static final AllDateRange INSTANCE = new AllDateRange();
 
-    protected AnyDateRange() {
+    protected AllDateRange() {
     }
 
     @Nonnull
@@ -49,18 +49,13 @@ public class AnyDateRange implements DateRange, Serializable {
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        return obj instanceof DateRange && this.equals((DateRange) obj);
-    }
-
-    @Override
     public boolean equals(final DateRange that) {
-        return super.equals(that) && !that.isEmpty();
+        return !that.isEmpty() && super.equals(that);
     }
 
     @Override
     public String toString() {
-        return "(any)";
+        return "(all)";
     }
 
 }

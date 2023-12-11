@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ClosedDateRange implements DateRange, Serializable, Iterable<LocalDate> {
+public class ClosedDateRange extends AbstractDateRange implements Serializable, Iterable<LocalDate> {
 
     private static final long serialVersionUID = 8540911115103058696L;
 
@@ -93,16 +93,6 @@ public class ClosedDateRange implements DateRange, Serializable, Iterable<LocalD
             }
 
         };
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        return obj instanceof DateRange && this.equals((DateRange) obj);
-    }
-
-    @Override
-    public String toString() {
-        return "[" + start + "," + end + "]";
     }
 
 }

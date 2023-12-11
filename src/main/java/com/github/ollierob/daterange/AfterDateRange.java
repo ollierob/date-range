@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Optional;
 
-public class AfterDateRange implements DateRange, Serializable {
+public class AfterDateRange extends AbstractDateRange implements Serializable {
 
     private static final long serialVersionUID = -6455215487148810950L;
 
@@ -43,16 +43,6 @@ public class AfterDateRange implements DateRange, Serializable {
     @Override
     public DateRange shift(@Nonnull final Period shift) {
         return shift.isZero() ? this : new AfterDateRange(start.plus(shift));
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        return obj instanceof DateRange && this.equals((DateRange) obj);
-    }
-
-    @Override
-    public String toString() {
-        return "[" + start + ",..)";
     }
 
 }

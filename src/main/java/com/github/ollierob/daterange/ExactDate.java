@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * A range containing a single date.
  */
-public class ExactDate implements DateRange, Serializable {
+public class ExactDate extends AbstractDateRange implements Serializable {
 
     private static final long serialVersionUID = -7822691754379610144L;
 
@@ -81,11 +81,6 @@ public class ExactDate implements DateRange, Serializable {
     @Override
     public DateRange shift(final Period shift) {
         return shift.isZero() ? this : new ExactDate(date.plus(shift));
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        return obj instanceof DateRange && this.equals((DateRange) obj);
     }
 
     @Override

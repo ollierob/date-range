@@ -7,7 +7,7 @@ import java.time.Period;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ShiftedDateRange implements DateRange, Serializable {
+public class ShiftedDateRange extends AbstractDateRange implements Serializable {
 
     private static final long serialVersionUID = -6980833782804824602L;
 
@@ -53,17 +53,6 @@ public class ShiftedDateRange implements DateRange, Serializable {
     @Override
     public boolean isEmpty() {
         return delegate.isEmpty();
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-        return obj instanceof DateRange && this.equals((DateRange) obj);
-    }
-
-    @Override
-    public String toString() {
-        final String start = this.earliest().map(d -> d + "+" + shiftStart).orElse(null);
-        throw new UnsupportedOperationException(); //TODO
     }
 
 }
