@@ -2,6 +2,7 @@ package com.github.ollierob.daterange;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.Year;
@@ -160,6 +161,11 @@ public interface DateRange {
     @Nonnull
     static DateRange onOrBefore(final LocalDate date) {
         return new BeforeDateRange(date);
+    }
+
+    @Nonnull
+    static DateRange onOrBefore(final LocalDate date, final Duration ago) {
+        return closed(date.minus(ago), date);
     }
 
     @Nonnull
